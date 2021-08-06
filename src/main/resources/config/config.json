@@ -1,0 +1,24 @@
+{
+  "M": 10,
+  "N": 4,
+  "rc": 4,
+  "L": 100,
+  "particles": [
+    {
+      "position": [2, 3],
+      "radius": 2
+    },
+    {
+      "position": [4, 1],
+      "radius": 1
+    },
+    {
+      "position": [10, 0],
+      "radius": 2
+    },
+    {
+      "position": [2, 3],
+      "radius": 2
+    }
+  ]
+}
