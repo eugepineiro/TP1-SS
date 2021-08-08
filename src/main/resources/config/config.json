@@ -1,8 +1,8 @@
 {
-  "M": 10,
-  "N": 4,
-  "rc": 4,
-  "L": 100,
+  "grid_dimension": 10,
+  "number_of_partciles": 4,
+  "radius": 4,
+  "grid_side": 100,
   "particles": [
     {
       "position": [2, 3],
