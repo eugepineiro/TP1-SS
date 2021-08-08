@@ -18,6 +18,8 @@ public class Simulation {
 //            String prettyConfig = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(config);
 //            System.out.println(prettyConfig);
 
+            config.setParticles(ParticlesGenerator.generateRandom(100, config.getL_grid_side()));
+
             Particle chosen = config.getParticles().get(0);
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());

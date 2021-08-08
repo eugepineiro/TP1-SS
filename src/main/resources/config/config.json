@@ -1,5 +1,5 @@
 {
-  "m_grid_dimension": 10,
+  "m_grid_dimension": 4,
   "n_number_of_particles": 4,
   "r_interaction_radius": 4,
   "l_grid_side": 10,
