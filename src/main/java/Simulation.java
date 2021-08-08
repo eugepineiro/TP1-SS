@@ -22,7 +22,11 @@ public class Simulation {
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
 
-//            List<Particle> neighbours = CellIndexMethod.search()
+            List<Particle> neighbours = CellIndexMethod.search(matrix, chosen, config.getR_interaction_radius(), config.getM_grid_dimension(), (int) config.getL_grid_side()/ config.getM_grid_dimension(), false);
+
+            System.out.println(neighbours);
+
+            //            List<Particle> neighbours = CellIndexMethod.search()
 
         } catch (IOException e) {
             e.printStackTrace();
