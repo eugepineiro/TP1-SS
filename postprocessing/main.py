@@ -11,6 +11,8 @@ with open("../src/main/resources/result.json") as f:
 
 interaction_radius = config["r_interaction_radius"] 
 number_of_particles = config["n_number_of_particles"]
+grid_size = config["m_grid_dimension"]
+
 idx = random.randint(0,number_of_particles-1)
 
 particle = all_particles[idx]
@@ -35,13 +37,4 @@ for i in range(len(all_particles[idx]['neighbours'])):
     neighbours_y.append(all_particles[idx]['neighbours'][i]['y'])
     neighbours_radius.append(all_particles[idx]['neighbours'][i]['radius'])    
 
-
-#x = [2,3,4,5]
-#y = [2,3,4,5]
-#radius = [200,300,400,500]
-#particle = [1,1,10] # x, y, rc 
-#neighbours_x = [2,3]
-#neighbours_y = [2,3]
-#neighbours_radius = [200,300]
-
-plot(all_particles_x,all_particles_y, all_particles_radius, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius])
+plot(all_particles_x,all_particles_y, all_particles_radius, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius], grid_size)
