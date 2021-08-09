@@ -14,6 +14,9 @@ public class CellIndexMethod {
 
                     // partículas de una celda
                     for(int t = 0; t < matrix[i][j].size(); t++){
+                         if(!particleMap.containsKey(matrix[i][j].get(t))) {
+                              particleMap.put(matrix[i][j].get(t), new ArrayList<>());
+                         }
                          // chequeo contra la misma celda
                          for(int k = t + 1; k < matrix[i][j].size(); k++) {
                               addNeighbours(particleMap, matrix[i][j].get(t), matrix[i][j].get(k), interactionRadius);
