@@ -2,6 +2,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class Simulation {
@@ -20,11 +21,9 @@ public class Simulation {
 
             config.setParticles(ParticlesGenerator.generateRandom(100, config.getL_grid_side()));
 
-            Particle chosen = config.getParticles().get(0);
-
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
 
-            List<Particle> neighbours = CellIndexMethod.search(matrix, chosen, config.getR_interaction_radius(), config.getM_grid_dimension(), (int) config.getL_grid_side()/ config.getM_grid_dimension(), false);
+            HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), false);
 
             System.out.println(neighbours);
 

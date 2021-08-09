@@ -1,5 +1,7 @@
+import java.util.Objects;
 
 public class Particle {
+    private long id;
     private long x;
     private long y;
     private long radius;
@@ -7,7 +9,8 @@ public class Particle {
     public Particle() {
     }
 
-    public Particle(long x, long y, long radius) {
+    public Particle(long id, long x, long y, long radius) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -35,6 +38,19 @@ public class Particle {
 
     public void setRadius(long radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Particle particle = (Particle) o;
+        return id == particle.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
