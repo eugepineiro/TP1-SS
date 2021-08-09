@@ -25,19 +25,19 @@ public class Simulation {
 //            String prettyConfig = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(config);
 //            System.out.println(prettyConfig);
 
-            config.setParticles(ParticlesGenerator.generateRandom(100, config.getL_grid_side()));
+            config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side()));
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
 
             HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), false);
 
-            List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(particleListEntry -> {
+            List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
-                obj.put("id", particleListEntry.getKey().getId());
-                obj.put("x", particleListEntry.getKey().getX());
-                obj.put("y", particleListEntry.getKey().getY());
-                obj.put("radius", particleListEntry.getKey().getRadius());
-                obj.put("neighbours", particleListEntry.getValue());
+                obj.put("id", entry.getKey().getId());
+                obj.put("x", entry.getKey().getX());
+                obj.put("y", entry.getKey().getY());
+                obj.put("radius", entry.getKey().getRadius());
+                obj.put("neighbours", entry.getValue());
                 return obj;
             }).collect(Collectors.toList());
 
