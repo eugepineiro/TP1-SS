@@ -1,6 +1,6 @@
 {
   "m_grid_dimension": 4,
-  "n_number_of_particles": 4,
+  "n_number_of_particles": 100,
   "r_interaction_radius": 5,
   "l_grid_side": 16,
   "particles": [
