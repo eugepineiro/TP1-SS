@@ -1,9 +1,15 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Simulation {
     // carga config, llama al CIM, devuelve list_vecinos
@@ -25,7 +31,23 @@ public class Simulation {
 
             HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), false);
 
-            System.out.println(neighbours);
+            List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(particleListEntry -> {
+                Map<String, Object> obj = new HashMap<>();
+                obj.put("id", particleListEntry.getKey().getId());
+                obj.put("x", particleListEntry.getKey().getX());
+                obj.put("y", particleListEntry.getKey().getY());
+                obj.put("radius", particleListEntry.getKey().getRadius());
+                obj.put("neighbours", particleListEntry.getValue());
+                return obj;
+            }).collect(Collectors.toList());
+
+            Gson gson = new Gson();
+            String json = gson.toJson(to_ret);
+            System.out.println(json);
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/result.json"));
+            writer.write(json);
+            writer.close();
 
             //            List<Particle> neighbours = CellIndexMethod.search()
 

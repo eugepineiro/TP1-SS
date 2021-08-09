@@ -16,6 +16,10 @@ public class Particle {
         this.radius = radius;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public long getX() {
         return x;
     }
@@ -56,7 +60,8 @@ public class Particle {
     @Override
     public String toString() {
         return "Particle{" +
-                "x=" + x +
+                "id=" + id +
+                ", x=" + x +
                 ", y=" + y +
                 ", radius=" + radius +
                 '}';
