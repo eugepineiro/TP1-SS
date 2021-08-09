@@ -1,3 +1,4 @@
 target
 .idea
 postprocessing/__pychache__
+*.json
