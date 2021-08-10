@@ -7,7 +7,7 @@ public class Config {
 
     private Integer m_grid_dimension;
     private Integer n_number_of_particles;
-    private Integer r_interaction_radius;
+    private Double r_interaction_radius;
     private Integer l_grid_side;
     private List<Particle> particles;
 
@@ -27,11 +27,11 @@ public class Config {
         this.n_number_of_particles = n_number_of_particles;
     }
 
-    public Integer getR_interaction_radius() {
+    public Double getR_interaction_radius() {
         return r_interaction_radius;
     }
 
-    public void setR_interaction_radius(Integer r_interaction_radius) {
+    public void setR_interaction_radius(Double r_interaction_radius) {
         this.r_interaction_radius = r_interaction_radius;
     }
 

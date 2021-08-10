@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CellIndexMethod {
 
-     public static HashMap<Particle, List<Particle>> search(List<Particle>[][] matrix, int interactionRadius, int M, boolean periodicReturnCond) {
+     public static HashMap<Particle, List<Particle>> search(List<Particle>[][] matrix, double interactionRadius, int M, boolean periodicReturnCond) {
 
           HashMap<Particle, List<Particle>> particleMap = new HashMap<>();
           // TODO: agregar periodic condition
@@ -50,8 +50,9 @@ public class CellIndexMethod {
           return particleMap;
      }
 
-     private static void addNeighbours(HashMap<Particle, List<Particle>> particleMap, Particle p1, Particle p2, int interactionRadius) {
+     private static void addNeighbours(HashMap<Particle, List<Particle>> particleMap, Particle p1, Particle p2, double interactionRadius) {
           if (p1 != p2 && isInsideRadius(interactionRadius, p1, p2)) {
+               System.out.println("Added : "+ p1 + " to " + p2);
                if(!particleMap.containsKey(p1)) {
                     particleMap.put(p1, new ArrayList<>());
                }
@@ -105,9 +106,9 @@ public class CellIndexMethod {
 //     }
 
 
-     private static boolean isInsideRadius(int interactionRadius, Particle particle, Particle other) {
+     private static boolean isInsideRadius(double interactionRadius, Particle particle, Particle other) {
           // TODO periodic condition
           double distance = Math.sqrt((particle.getX() - other.getX())^2 + (particle.getY() - other.getY())^2);
-          return distance <= particle.getRadius() + other.getRadius() + interactionRadius;
+          return distance <= (particle.getRadius() + other.getRadius() + interactionRadius);
      }
 }

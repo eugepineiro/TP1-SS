@@ -4,12 +4,12 @@ public class Particle {
     private long id;
     private long x;
     private long y;
-    private long radius;
+    private double radius;
 
     public Particle() {
     }
 
-    public Particle(long id, long x, long y, long radius) {
+    public Particle(long id, long x, long y, double radius) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -28,7 +28,7 @@ public class Particle {
         return y;
     }
 
-    public long getRadius() {
+    public double getRadius() {
         return radius;
     }
 
@@ -40,7 +40,7 @@ public class Particle {
         this.y = y;
     }
 
-    public void setRadius(long radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 

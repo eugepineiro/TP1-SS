@@ -1,13 +1,13 @@
 {
-  "m_grid_dimension": 4,
-  "n_number_of_particles": 10,
-  "r_interaction_radius": 5,
-  "l_grid_side": 12,
+  "m_grid_dimension": 10,
+  "n_number_of_particles": 50,
+  "r_interaction_radius": 2,
+  "l_grid_side": 20,
   "particles": [
     {
       "x": 20,
       "y": 3,
-      "radius": 2
+      "radius": 0.25
     },
     {
       "x": 45,
