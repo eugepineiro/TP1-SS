@@ -10,7 +10,7 @@ with open("../src/main/resources/result.json") as f:
     all_particles = json.load(f) 
 
 interaction_radius = config["r_interaction_radius"] 
-number_of_particles = config["n_number_of_particles"]
+number_of_particles = len(all_particles)
 M_grid_size = config["m_grid_dimension"]
 L_grid_side = config["l_grid_side"]
 

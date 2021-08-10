@@ -5,7 +5,7 @@ import java.util.List;
 public class Grid {
 
     public static List<Particle>[][] build(List<Particle> particles, int M, int L){
-        int cellSize = (int) Math.ceil(1.0 * L/M);
+        double cellSize = 1.0 * L/M;
 
         //List<List<List<Particle>>> matrix = new ArrayList<>(M);
         List<Particle>[][] matrix = new ArrayList[M][M];
@@ -19,7 +19,7 @@ public class Grid {
 
 //        Arrays.stream(matrix).forEach(() -> ArrayList::new);
 
-        particles.forEach(p -> matrix[(int) p.getY() / cellSize][(int) p.getX() / cellSize].add(p));
+        particles.forEach(p -> matrix[(int) (p.getY() / cellSize)][(int) (p.getX() / cellSize)].add(p));
 
         StringBuilder sb = new StringBuilder();
 

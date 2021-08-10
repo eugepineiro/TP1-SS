@@ -1,28 +1,29 @@
 {
   "m_grid_dimension": 10,
-  "n_number_of_particles": 50,
-  "r_interaction_radius": 2,
+  "r_interaction_radius": 1,
   "l_grid_side": 20,
+  "random_generator": false,
+  "n_number_of_particles": 20,
   "particles": [
     {
-      "x": 20,
+      "x": 19,
       "y": 3,
       "radius": 0.25
     },
     {
-      "x": 45,
+      "x": 15,
       "y": 1,
-      "radius": 1
+      "radius": 0.25
     },
     {
       "x": 10,
       "y": 0,
-      "radius": 2
+      "radius": 0.25
     },
     {
       "x": 2,
       "y": 3,
-      "radius": 2
+      "radius": 0.25
     }
   ]
 }

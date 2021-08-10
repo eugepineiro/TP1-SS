@@ -9,6 +9,7 @@ public class Config {
     private Integer n_number_of_particles;
     private Double r_interaction_radius;
     private Integer l_grid_side;
+    private Boolean random_generator;
     private List<Particle> particles;
 
     public Integer getM_grid_dimension() {
@@ -51,14 +52,23 @@ public class Config {
         this.particles = particles;
     }
 
+    public Boolean getRandom_generator() {
+        return random_generator;
+    }
+
+    public void setRandom_generator(Boolean random_generator) {
+        this.random_generator = random_generator;
+    }
+
     @Override
     public String toString() {
         return "Config{" +
-                "\nm_grid_dimension=" + m_grid_dimension +
-                "\nn_number_of_particles=" + n_number_of_particles +
-                "\nr_interaction_radius=" + r_interaction_radius +
-                "\nl_grid_side=" + l_grid_side +
-                "\nparticles=" + particles +
-                "\n}";
+                "m_grid_dimension=" + m_grid_dimension +
+                ", n_number_of_particles=" + n_number_of_particles +
+                ", r_interaction_radius=" + r_interaction_radius +
+                ", l_grid_side=" + l_grid_side +
+                ", random_generator=" + random_generator +
+                ", particles=" + particles +
+                '}';
     }
 }

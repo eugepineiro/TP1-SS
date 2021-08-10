@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.sun.xml.internal.ws.wsdl.writer.document.Part;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,7 +26,22 @@ public class Simulation {
 //            String prettyConfig = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(config);
 //            System.out.println(prettyConfig);
 
-            config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side()));
+            if (1.0 * config.getL_grid_side() / config.getM_grid_dimension() <= config.getR_interaction_radius()) {
+                throw new IllegalArgumentException("L/M > rc");
+            }
+
+            if (config.getRandom_generator()) {
+                config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side()));
+            }
+            else {
+                config.setN_number_of_particles(config.getParticles().size());
+                List<Particle> particles = config.getParticles();
+                for (int i = 0; i < config.getN_number_of_particles(); i++){
+                    particles.get(i).setId(i);
+                }
+            }
+
+            System.out.println(config.getN_number_of_particles());
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
 

@@ -2,14 +2,14 @@ import java.util.Objects;
 
 public class Particle {
     private long id;
-    private long x;
-    private long y;
+    private double x;
+    private double y;
     private double radius;
 
     public Particle() {
     }
 
-    public Particle(long id, long x, long y, double radius) {
+    public Particle(long id, double x, double y, double radius) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -20,11 +20,11 @@ public class Particle {
         return id;
     }
 
-    public long getX() {
+    public double getX() {
         return x;
     }
 
-    public long getY() {
+    public double getY() {
         return y;
     }
 
@@ -32,16 +32,20 @@ public class Particle {
         return radius;
     }
 
-    public void setX(long x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(long y) {
+    public void setY(double y) {
         this.y = y;
     }
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

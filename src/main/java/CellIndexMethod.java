@@ -64,51 +64,9 @@ public class CellIndexMethod {
           }
      }
 
-//private static List<Particle> searchOneParticle(List<Particle>[][] matrix, Particle particle, int interactionRadius, int M, int cellSize, boolean periodicReturnCond) {
-//          int particleGridIdxJ = (int) (particle.getX() / cellSize);
-//          int particleGridIdxI = (int) (particle.getY() / cellSize);
-//
-//          List<Particle> neighbours = new ArrayList<>();
-//          int limit_i = particleGridIdxI + 2;
-//          int limit_j = particleGridIdxJ - 1 + 3;
-//
-//          // caso celda superior
-//          int j = particleGridIdxJ - 1;
-//          if (periodicReturnCond) {
-//               j %= M;
-//          }
-//          if (j >= 0) {
-//               for (Particle p: matrix[particleGridIdxI][j]) {
-//                    if (p != particle && isInsideRadius(interactionRadius, particle, p)) {
-//                         neighbours.add(p);
-//                    }
-//               }
-//          }
-//
-//          // caso columna derecha
-//          for (int i = particleGridIdxI; i < limit_i; i++) { //search in L optimization
-//               for (int j = particleGridIdxJ - 1; j < limit_j; j++) {
-//                    if (periodicReturnCond) {
-//                         i %= M;
-//                         j %= M;
-//                    }
-//                    if (i >= 0 && i < M && j >= 0 && j < M) {
-//                         for (Particle p: matrix[i][j]) {
-//                              if (p != particle && isInsideRadius(interactionRadius, particle, p)) {
-//                                   neighbours.add(p);
-//                              }
-//                         }
-//                    }
-//               }
-//          }
-//
-//          return neighbours;
-//     }
-
-
      private static boolean isInsideRadius(double interactionRadius, Particle particle, Particle other) {
           // TODO periodic condition
-          double distance = Math.sqrt((particle.getX() - other.getX())^2 + (particle.getY() - other.getY())^2);
+          double distance = Math.sqrt(Math.pow((particle.getX() - other.getX()),2) + Math.pow((particle.getY() - other.getY()),2));
           return distance <= (particle.getRadius() + other.getRadius() + interactionRadius);
      }
 }

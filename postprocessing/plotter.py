@@ -66,8 +66,8 @@ def plot(particles_x, particles_y, particles_radius, particle, interaction_radiu
     cell_size = 1.0 * grid_side / grid_size
 
     # Major ticks every cell_size, minor ticks every 1
-    major_ticks = np.arange(0, grid_side, cell_size)
-    minor_ticks = np.arange(0, grid_side, 1)
+    major_ticks = np.arange(0, grid_side+1, cell_size)
+    minor_ticks = np.arange(0, grid_side+1, 1)
 
     axes.set_xticks(major_ticks)
     axes.set_xticks(minor_ticks, minor=True)
@@ -76,6 +76,8 @@ def plot(particles_x, particles_y, particles_radius, particle, interaction_radiu
     plt.grid(color='#CCCCCC') # MxM
 
     plt.title('Circle')
-    plt.xlim([0, grid_side])
-    plt.ylim([0, grid_side])
+    max_radius = grid_side/20
+
+    plt.xlim([0 - max_radius, grid_side + max_radius])
+    plt.ylim([0 - max_radius, grid_side + max_radius])
     plt.show()
