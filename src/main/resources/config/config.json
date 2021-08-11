@@ -2,12 +2,12 @@
   "m_grid_dimension": 10,
   "r_interaction_radius": 1,
   "l_grid_side": 20,
-  "n_number_of_particles": 2000,
-  "random_generator": true,
-  "brute_force": true,
+  "n_number_of_particles": 400,
+  "random_generator": false,
+  "brute_force": false,
   "periodic_return": true,
   "particles": [
-    {"x":19.5,"y":10,"radius":0.36454758414975763},
-    {"x":0.5, "y":10,"radius":0.3665238982265391}
+    {"x":19.5,"y":0.5,"radius":0.36454758414975763},
+    {"x":18.5, "y":0.5,"radius":0.3665238982265391}
   ]
 }
