@@ -16,7 +16,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
     # Draw particle 
     draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     axes.add_artist(draw_particle_radius)
-    particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0)
+    particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0,label='Particle')
     cursor_particles=mplcursors.cursor(particle_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particle['id']))
     #axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
@@ -40,7 +40,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
         axes.add_artist(draw_particle_radius)
         #axes.annotate(str(p['id']), xy=(p['x'], p['y']), fontsize=15, ha="center", color='cyan')
 
-    particles_scatter = plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius], alpha=0.5)
+    particles_scatter = plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius],color="blue", alpha=0.5, label='Others')
     cursor_particles=mplcursors.cursor(particles_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particles_id[sel.target.index]))
 
@@ -57,7 +57,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
         axes.add_artist(draw_neighbour_radius)
         #axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
 
-    neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]],color="none", alpha=0.5) 
+    neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]],color="none", alpha=0.5, label='Neighbours') 
     cursor=mplcursors.cursor(neighbours_scatter)
     cursor.connect("add", lambda sel: sel.annotation.set_text(neighbours[3][sel.target.index]))
   
@@ -73,12 +73,12 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
     axes.set_yticks(minor_ticks, minor=True)
     plt.grid(color='#CCCCCC') # MxM
 
-    plt.title('Circle')
+    plt.title('Particle')
     max_radius = grid_side/50
 
     plt.xlim([0 - max_radius, grid_side + max_radius])
     plt.ylim([0 - max_radius, grid_side + max_radius])
 
-    
+    plt.legend(handles=[particle_scatter,particles_scatter, neighbours_scatter], bbox_to_anchor=(1.05, 1), loc='upper left')
 
     plt.show()
