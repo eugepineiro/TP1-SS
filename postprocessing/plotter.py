@@ -1,49 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import mplcursors
 
 SCALE = 1
 COLORS = ['#AD6D70', '#EC2504', '#8C0B90', '#C0E4FF', '#7C60A8', '#CF95D7']
 
 def plot(particles_x, particles_y, particles_radius, particles_id, particle, interaction_radius, neighbours, grid_size, grid_side): 
-   
-
-    # fig = plt.figure()
-    # ax = fig.gca()
-    # ax.set_xticks(list(range(grid_size)))
-    # ax.set_yticks(list(range(grid_size)))
-
-    # plt.scatter(particle['x'], particle['y'], s=particle['radius']*SCALE, color='red', alpha=0.5)               #particle
-    # plt.scatter(particle['x'], particle['y'], s=(interaction_radius + particle['radius'])*SCALE, color="none", edgecolor="black")     #interaction radius 
-    # plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius], alpha=0.5)                                        #other particles
-    # plt.scatter(neighbours[0], neighbours[1], s=[e * SCALE for e in neighbours[2]],color="green", alpha=0.5)    #neighbours
-    # plt.grid(color='#CCCCCC') # MxM
-
-    # plt.scatter(particle['x'], particle['y'], color='red', alpha=0.5)               #particle
-    # plt.Circle((particle['x'], particle['y']), particle['radius'])                #radius
-    # plt.scatter(particle['x'], particle['y'], s=(interaction_radius + particle['radius'])*SCALE, color="none", edgecolor="black")     #interaction radius 
-    # plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius], alpha=0.5)                                        #other particles
-    # plt.scatter(neighbours[0], neighbours[1], s=[e * SCALE for e in neighbours[2]],color="green", alpha=0.5)    #neighbours
-    # plt.grid(color='#CCCCCC') # MxM
-
-    #plt.show()
-
-
-    
+ 
     figure, axes = plt.subplots()
-    draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
-    draw_interaction_radius = plt.Circle((particle['x'], particle['y']), interaction_radius + particle['radius'], fill=False) #interaction radius
-    axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
+   
     print(particle['x'], particle['y'], particle['radius'])
 
-
     axes.set_aspect(1)
+   
+    # Draw particle 
+    draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     axes.add_artist(draw_particle_radius)
-    axes.add_artist(draw_interaction_radius)
+    particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0)
+    cursor_particles=mplcursors.cursor(particle_scatter,hover=True)
+    cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particle['id']))
+    #axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
 
-    plt.scatter(particle['x'], particle['y'], color='red', alpha=0.5)               #particle
+    # Draw interaction radius 
+    draw_interaction_radius = plt.Circle((particle['x'], particle['y']), interaction_radius + particle['radius'], fill=False) #interaction radius
+    axes.add_artist(draw_interaction_radius)
     plt.scatter(particle['x'], particle['y'], s=(interaction_radius + particle['radius'])*SCALE, color="none", edgecolor="black")      
     
     # Draw other particles
+    
     for i in range(0, len(particles_x)):
         p = {
             'x': particles_x[i],
@@ -54,7 +38,11 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
 
         draw_particle_radius = plt.Circle((p['x'], p['y']), p['radius'], color="blue", alpha=0.5)
         axes.add_artist(draw_particle_radius)
-        axes.annotate(str(p['id']), xy=(p['x'], p['y']), fontsize=15, ha="center", color='cyan')
+        #axes.annotate(str(p['id']), xy=(p['x'], p['y']), fontsize=15, ha="center", color='cyan')
+
+    particles_scatter = plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius], alpha=0.5)
+    cursor_particles=mplcursors.cursor(particles_scatter,hover=True)
+    cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particles_id[sel.target.index]))
 
     # Draw neighbours    
     for i in range(0, len(neighbours[0])):
@@ -67,8 +55,12 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
 
         draw_neighbour_radius = plt.Circle((n['x'], n['y']), n['radius'], color="green", alpha=0.5)
         axes.add_artist(draw_neighbour_radius)
-        axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
- 
+        #axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
+
+    neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]],color="none", alpha=0.5) 
+    cursor=mplcursors.cursor(neighbours_scatter,hover=True)
+    cursor.connect("add", lambda sel: sel.annotation.set_text(neighbours[3][sel.target.index]))
+  
     cell_size = 1.0 * grid_side / grid_size
 
     # Major ticks every cell_size, minor ticks every 1
@@ -86,4 +78,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
 
     plt.xlim([0 - max_radius, grid_side + max_radius])
     plt.ylim([0 - max_radius, grid_side + max_radius])
+
+    
+
     plt.show()
