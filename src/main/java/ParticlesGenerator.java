@@ -6,7 +6,7 @@ public class ParticlesGenerator {
     public static List<Particle> generateRandom(int N, int L) {
         List<Particle> generated = new ArrayList<>();
         double x, y;
-        double radius, maxRadius = L/20.0; // TODO: Is it okay?
+        double radius, maxRadius = L/50.0; // TODO: Is it okay?
         for (int i = 0; i < N; i++) {
             x = ThreadLocalRandom.current().nextDouble(0, L); // upper bound excluded
             y = ThreadLocalRandom.current().nextDouble(0, L); // upper bound excluded

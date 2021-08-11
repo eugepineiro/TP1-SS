@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 SCALE = 1
 COLORS = ['#AD6D70', '#EC2504', '#8C0B90', '#C0E4FF', '#7C60A8', '#CF95D7']
 
-def plot(particles_x, particles_y, particles_radius, particle, interaction_radius, neighbours, grid_size, grid_side): 
+def plot(particles_x, particles_y, particles_radius, particles_id, particle, interaction_radius, neighbours, grid_size, grid_side): 
    
 
     # fig = plt.figure()
@@ -32,7 +32,9 @@ def plot(particles_x, particles_y, particles_radius, particle, interaction_radiu
     figure, axes = plt.subplots()
     draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     draw_interaction_radius = plt.Circle((particle['x'], particle['y']), interaction_radius + particle['radius'], fill=False) #interaction radius
+    axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
     print(particle['x'], particle['y'], particle['radius'])
+
 
     axes.set_aspect(1)
     axes.add_artist(draw_particle_radius)
@@ -46,22 +48,26 @@ def plot(particles_x, particles_y, particles_radius, particle, interaction_radiu
         p = {
             'x': particles_x[i],
             'y': particles_y[i],
-            'radius': particles_radius[i]
+            'radius': particles_radius[i],
+            'id': particles_id[i]
         }
 
         draw_particle_radius = plt.Circle((p['x'], p['y']), p['radius'], color="blue", alpha=0.5)
         axes.add_artist(draw_particle_radius)
+        axes.annotate(str(p['id']), xy=(p['x'], p['y']), fontsize=15, ha="center", color='cyan')
 
     # Draw neighbours    
     for i in range(0, len(neighbours[0])):
         n = {
             'x': neighbours[0][i],
             'y': neighbours[1][i],
-            'radius': neighbours[2][i]
+            'radius': neighbours[2][i],
+            'id': neighbours[3][i]
         }
 
         draw_neighbour_radius = plt.Circle((n['x'], n['y']), n['radius'], color="green", alpha=0.5)
         axes.add_artist(draw_neighbour_radius)
+        axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
  
     cell_size = 1.0 * grid_side / grid_size
 
@@ -76,7 +82,7 @@ def plot(particles_x, particles_y, particles_radius, particle, interaction_radiu
     plt.grid(color='#CCCCCC') # MxM
 
     plt.title('Circle')
-    max_radius = grid_side/20
+    max_radius = grid_side/50
 
     plt.xlim([0 - max_radius, grid_side + max_radius])
     plt.ylim([0 - max_radius, grid_side + max_radius])

@@ -26,8 +26,8 @@ public class Simulation {
 //            String prettyConfig = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(config);
 //            System.out.println(prettyConfig);
 
-            if (1.0 * config.getL_grid_side() / config.getM_grid_dimension() <= config.getR_interaction_radius()) {
-                throw new IllegalArgumentException("L/M > rc");
+            if (1.0 * config.getL_grid_side() / config.getM_grid_dimension() <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50) ) {
+                throw new IllegalArgumentException("L/M > rc + 2 * max_particle_radius (L/50.0)");
             }
 
             if (config.getRandom_generator()) {
@@ -45,7 +45,7 @@ public class Simulation {
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
 
-            HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), false);
+            HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), config.getL_grid_side(), false);
 
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
