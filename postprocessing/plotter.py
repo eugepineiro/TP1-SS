@@ -17,7 +17,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
     draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     axes.add_artist(draw_particle_radius)
     particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0)
-    cursor_particles=mplcursors.cursor(particle_scatter,hover=True)
+    cursor_particles=mplcursors.cursor(particle_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particle['id']))
     #axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
 
@@ -41,7 +41,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
         #axes.annotate(str(p['id']), xy=(p['x'], p['y']), fontsize=15, ha="center", color='cyan')
 
     particles_scatter = plt.scatter(particles_x, particles_y, s=[e * SCALE for e in particles_radius], alpha=0.5)
-    cursor_particles=mplcursors.cursor(particles_scatter,hover=True)
+    cursor_particles=mplcursors.cursor(particles_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particles_id[sel.target.index]))
 
     # Draw neighbours    
@@ -58,7 +58,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
         #axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
 
     neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]],color="none", alpha=0.5) 
-    cursor=mplcursors.cursor(neighbours_scatter,hover=True)
+    cursor=mplcursors.cursor(neighbours_scatter)
     cursor.connect("add", lambda sel: sel.annotation.set_text(neighbours[3][sel.target.index]))
   
     cell_size = 1.0 * grid_side / grid_size
