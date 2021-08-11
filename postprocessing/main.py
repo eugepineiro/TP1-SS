@@ -1,20 +1,30 @@
-import json, random
-
-from numpy import number
+import json, random, sys
 from plotter import plot
 
 with open("../src/main/resources/config/config.json") as f:
     config = json.load(f) 
 
 with open("../src/main/resources/result.json") as f:
-    all_particles = json.load(f) 
+    all_particles = json.load(f)
 
 interaction_radius = config["r_interaction_radius"] 
 number_of_particles = len(all_particles)
 M_grid_size = config["m_grid_dimension"]
 L_grid_side = config["l_grid_side"]
 
-idx = random.randint(0,number_of_particles-1)
+if(len(sys.argv) == 2):
+    try:
+        aux = int(sys.argv[1])
+        if aux < 0:
+            raise Exception('Id must be zero or positive')
+        elif aux >= len(all_particles):
+            raise Exception('There is not enough particles')
+        else:
+            idx = aux
+    except:
+        raise Exception("Id must be a number")
+else:
+    idx = random.randint(0,number_of_particles-1)
 
 particle = all_particles[idx]
 print("ID: ", particle['id'])

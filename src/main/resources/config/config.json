@@ -4,7 +4,7 @@
   "l_grid_side": 20,
   "n_number_of_particles": 400,
   "random_generator": true,
-  "brute_force": true,
+  "brute_force": false,
   "periodic_return": false,
   "particles": [
     {"x":1.8747336177591323,"y":12.780536128838417,"radius":0.36454758414975763},

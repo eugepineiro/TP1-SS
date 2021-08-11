@@ -4,10 +4,10 @@ import java.util.List;
 
 abstract class SearchMethod {
     protected static void addNeighbours(HashMap<Particle, List<Particle>> particleMap, Particle p1, Particle p2, double interactionRadius, int L, boolean periodicReturnCond) {
+        if(!particleMap.containsKey(p1)) { particleMap.put(p1, new ArrayList<>()); }
+        if(!particleMap.containsKey(p2)) { particleMap.put(p2, new ArrayList<>()); }
         if (p1 != p2 && isInsideRadius(interactionRadius, p1, p2, L, periodicReturnCond)) {
 //            System.out.println("Added : "+ p1 + " to " + p2);
-            if(!particleMap.containsKey(p1)) { particleMap.put(p1, new ArrayList<>()); }
-            if(!particleMap.containsKey(p2)) { particleMap.put(p2, new ArrayList<>()); }
             particleMap.get(p1).add(p2);
             particleMap.get(p2).add(p1);
         }
