@@ -1,12 +1,12 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CellIndexMethod extends SearchMethod{
+public class CellIndexMethod extends SearchMethod {
 
-     public static HashMap<Particle, List<Particle>> search(List<Particle>[][] matrix, double interactionRadius, int M, int L, boolean periodicReturnCond) {
+     public static Map<Particle, List<Particle>> search(List<Particle>[][] matrix, double interactionRadius, int M, int L, boolean periodicReturnCond) {
 
-          HashMap<Particle, List<Particle>> particleMap = new HashMap<>();
+          Map<Particle, List<Particle>> particleMap = new HashMap<>();
           // TODO: agregar periodic condition
           // Recorrido de grilla
           for(int i = 0 ; i < M ; i++) {

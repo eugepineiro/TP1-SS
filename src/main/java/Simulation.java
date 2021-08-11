@@ -43,7 +43,7 @@ public class Simulation {
 //            System.out.println(config.getN_number_of_particles());
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
-            HashMap<Particle, List<Particle>> neighbours;
+            Map<Particle, List<Particle>> neighbours;
 
             long startTime = System.nanoTime();
             if(config.getBrute_force()) {
