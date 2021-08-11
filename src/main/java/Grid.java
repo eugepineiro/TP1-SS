@@ -21,17 +21,17 @@ public class Grid {
 
         particles.forEach(p -> matrix[(int) (p.getY() / cellSize)][(int) (p.getX() / cellSize)].add(p));
 
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < M; j++) {
-                sb.append(matrix[i][j].toString()).append(", ");
-            }
-            sb.reverse().delete(0, 2).reverse();
-            sb.append("\n");
-        }
-
-        System.out.println(sb);
+//        StringBuilder sb = new StringBuilder();
+//
+//        for (int i = 0; i < M; i++) {
+//            for (int j = 0; j < M; j++) {
+//                sb.append(matrix[i][j].toString()).append(", ");
+//            }
+//            sb.reverse().delete(0, 2).reverse();
+//            sb.append("\n");
+//        }
+//
+//        System.out.println(sb);
 
         return matrix;
     }

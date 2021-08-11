@@ -41,11 +41,21 @@ public class Simulation {
                 }
             }
 
-            System.out.println(config.getN_number_of_particles());
+//            System.out.println(config.getN_number_of_particles());
 
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
+            HashMap<Particle, List<Particle>> neighbours;
 
-            HashMap<Particle, List<Particle>> neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), config.getL_grid_side(), false);
+            long startTime = System.nanoTime();
+            if(config.getBrute_force()) {
+                neighbours = BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
+            } else {
+                neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), config.getL_grid_side(), config.getPeriodic_return());
+            }
+            long endTime = System.nanoTime();
+            long timeElapsed = endTime - startTime;
+            System.out.println("Search execution time in milliseconds: " + timeElapsed / 1000000.0);
+
 
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
@@ -59,7 +69,7 @@ public class Simulation {
 
             Gson gson = new Gson();
             String json = gson.toJson(to_ret);
-            System.out.println(json);
+//            System.out.println(json);
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/result.json"));
             writer.write(json);
