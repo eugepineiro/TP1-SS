@@ -38,9 +38,9 @@ public class CellIndexMethod {
                          int h = i + 1;
                          k = k1;
 
-                         if(h < M && k >= 0) {
+                         if(h < M) {
                               for(; k <= j + 1 ; ) {
-                                   if(k < M) {
+                                   if(k >= 0 && k < M) {
                                         for(Particle p: matrix[h][k]) {
                                              addNeighbours(particleMap, matrix[i][j].get(t), p, interactionRadius, L, periodicReturnCond);
                                         }
