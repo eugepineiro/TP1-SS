@@ -16,8 +16,8 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
     # Draw particle 
     draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     axes.add_artist(draw_particle_radius)
-    cursor_particles=mplcursors.cursor(particle_scatter)
     particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0,label='Particle')
+    cursor_particles=mplcursors.cursor(particle_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particle['id']))
     #axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
 
