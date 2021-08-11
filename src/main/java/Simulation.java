@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class Simulation {
                 obj.put("radius", entry.getKey().getRadius());
                 obj.put("neighbours", entry.getValue());
                 return obj;
-            }).collect(Collectors.toList());
+            }).sorted(Comparator.comparingLong(a -> (Long) a.get("id"))).collect(Collectors.toList());
 
             Gson gson = new Gson();
             String json = gson.toJson(to_ret);
