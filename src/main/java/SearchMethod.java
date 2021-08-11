@@ -14,7 +14,6 @@ abstract class SearchMethod {
     }
 
     protected static boolean isInsideRadius(double interactionRadius, Particle particle, Particle other, int L,boolean periodicReturnCond) {
-        // TODO periodic condition
         double distance = Math.sqrt(Math.pow((particle.getX() - other.getX()),2) + Math.pow((particle.getY() - other.getY()),2));
 
         if (distance <= (particle.getRadius() + other.getRadius() + interactionRadius))
@@ -44,7 +43,7 @@ abstract class SearchMethod {
         }
 
         final double x_diff_pow = Math.pow((L - max_x + min_x), 2);
-        distance = Math.sqrt(x_diff_pow + Math.pow((max_x - min_x),2)); // Espejo en x
+        distance = Math.sqrt(x_diff_pow + Math.pow((max_y - min_y),2)); // Espejo en x
 
         if (distance <= (particle.getRadius() + other.getRadius() + interactionRadius) )
             return true;

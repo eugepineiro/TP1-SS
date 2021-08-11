@@ -51,10 +51,10 @@ public class Simulation {
             } else {
                 neighbours = CellIndexMethod.search(matrix, config.getR_interaction_radius(), config.getM_grid_dimension(), config.getL_grid_side(), config.getPeriodic_return());
             }
+
             long endTime = System.nanoTime();
             long timeElapsed = endTime - startTime;
             System.out.println("Search execution time in milliseconds: " + timeElapsed / 1000000.0);
-
 
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();

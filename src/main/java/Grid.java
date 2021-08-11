@@ -18,7 +18,7 @@ public class Grid {
 
 //        Arrays.stream(matrix).forEach(() -> ArrayList::new);
 
-        particles.forEach(p -> matrix[(int) (p.getY() / cellSize)][(int) (p.getX() / cellSize)].add(p));
+        particles.forEach(p -> matrix[(int) (p.getX() / cellSize)][(int) (p.getY() / cellSize)].add(p));
 
 //        StringBuilder sb = new StringBuilder();
 //

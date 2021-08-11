@@ -1,5 +1,5 @@
 target
 .idea
-postprocessing/__pychache__
+postprocessing/__pycache__
 *.json
 *.pyc
