@@ -1,9 +1,10 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BruteForceMethod extends SearchMethod {
-    public static HashMap<Particle, List<Particle>> search(List<Particle> particles, double interactionRadius, int L, boolean periodic) {
-        HashMap<Particle, List<Particle>> result = new HashMap<>();
+    public static Map<Particle, List<Particle>> search(List<Particle> particles, double interactionRadius, int L, boolean periodic) {
+        Map<Particle, List<Particle>> result = new HashMap<>();
 
         for(int i = 0 ; i < particles.size() ; i++) {
             for(int j = i+1 ; j < particles.size() ; j++) {

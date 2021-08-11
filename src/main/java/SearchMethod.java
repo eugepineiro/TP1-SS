@@ -1,9 +1,9 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 abstract class SearchMethod {
-    protected static void addNeighbours(HashMap<Particle, List<Particle>> particleMap, Particle p1, Particle p2, double interactionRadius, int L, boolean periodicReturnCond) {
+    protected static void addNeighbours(Map<Particle, List<Particle>> particleMap, Particle p1, Particle p2, double interactionRadius, int L, boolean periodicReturnCond) {
         if(!particleMap.containsKey(p1)) { particleMap.put(p1, new ArrayList<>()); }
         if(!particleMap.containsKey(p2)) { particleMap.put(p2, new ArrayList<>()); }
         if (p1 != p2 && isInsideRadius(interactionRadius, p1, p2, L, periodicReturnCond)) {
