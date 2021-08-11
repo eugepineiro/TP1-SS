@@ -11,6 +11,7 @@ interaction_radius = config["r_interaction_radius"]
 number_of_particles = len(all_particles)
 M_grid_size = config["m_grid_dimension"]
 L_grid_side = config["l_grid_side"]
+periodic_condition = config["periodic_return"]
 
 if(len(sys.argv) == 2):
     try:
@@ -52,4 +53,4 @@ for i in range(len(all_particles[idx]['neighbours'])):
     neighbours_y.append(all_particles[idx]['neighbours'][i]['y'])
     neighbours_radius.append(all_particles[idx]['neighbours'][i]['radius'])    
 
-plot(all_particles_x,all_particles_y, all_particles_radius, all_particles_id, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius, neighbours_id], M_grid_size, L_grid_side)
+plot(all_particles_x,all_particles_y, all_particles_radius, all_particles_id, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius, neighbours_id], M_grid_size, L_grid_side, periodic_condition)

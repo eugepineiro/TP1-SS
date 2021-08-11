@@ -29,10 +29,10 @@ public class CellIndexMethod extends SearchMethod{
                          }
 
                          // chequeo columna derecha (i+1; j-1) (i+1; j) (i+1; j+1)
-                         int h = i + 1;
+                         int h = periodicReturnCond? (i+1) % M :(i + 1);
 
                          if(h < M) {
-                              while (k <= j + 1) {
+                              for (int r=0; r < 3; r++) {
                                    if(k >= 0 && k < M) {
                                         for(Particle p: matrix[h][k]) {
                                              addNeighbours(particleMap, matrix[i][j].get(t), p, interactionRadius, L, periodicReturnCond);

@@ -4,6 +4,7 @@ import java.util.List;
 
 abstract class SearchMethod {
     protected static void addNeighbours(HashMap<Particle, List<Particle>> particleMap, Particle p1, Particle p2, double interactionRadius, int L, boolean periodicReturnCond) {
+         
         if(!particleMap.containsKey(p1)) { particleMap.put(p1, new ArrayList<>()); }
         if(!particleMap.containsKey(p2)) { particleMap.put(p2, new ArrayList<>()); }
         if (p1 != p2 && isInsideRadius(interactionRadius, p1, p2, L, periodicReturnCond)) {
@@ -17,8 +18,11 @@ abstract class SearchMethod {
         // TODO periodic condition
         double distance = Math.sqrt(Math.pow((particle.getX() - other.getX()),2) + Math.pow((particle.getY() - other.getY()),2));
 
-        if (!periodicReturnCond)
-            return distance <= (particle.getRadius() + other.getRadius() + interactionRadius);
+        if (distance <= (particle.getRadius() + other.getRadius() + interactionRadius))
+            return true ;
+        else if(!periodicReturnCond) {
+            return false;
+        }
 
         double max_x, min_x, max_y, min_y;
 
