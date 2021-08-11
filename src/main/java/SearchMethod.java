@@ -17,10 +17,8 @@ abstract class SearchMethod {
         // TODO periodic condition
         double distance = Math.sqrt(Math.pow((particle.getX() - other.getX()),2) + Math.pow((particle.getY() - other.getY()),2));
 
-        if (!periodicReturnCond) {
-            double aux = (particle.getRadius() + other.getRadius() + interactionRadius);
+        if (!periodicReturnCond)
             return distance <= (particle.getRadius() + other.getRadius() + interactionRadius);
-        }
 
         double max_x, min_x, max_y, min_y;
 

@@ -1,8 +1,5 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BruteForceMethod extends SearchMethod {
     public static HashMap<Particle, List<Particle>> search(List<Particle> particles, double interactionRadius, int L, boolean periodic) {
