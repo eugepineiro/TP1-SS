@@ -108,13 +108,13 @@ public class Simulation {
                     long startTime = System.nanoTime();
                     BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
                     long endTime = System.nanoTime();
-                    elapsedAverageCim += endTime - startTime;
+                    elapsedAverageBf += endTime - startTime;
 
                     // RUN CIM
                     startTime = System.nanoTime();
                     CellIndexMethod.search(matrix, config.getR_interaction_radius(), m, config.getL_grid_side(), config.getPeriodic_return());
                     endTime = System.nanoTime();
-                    elapsedAverageBf += endTime - startTime;
+                    elapsedAverageCim += endTime - startTime;
                 }
 
                 elapsedAverageCim /= iterationsToAverage;
