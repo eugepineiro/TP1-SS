@@ -12,6 +12,7 @@ public class Config {
     private Boolean random_generator;
     private Boolean brute_force;
     private Boolean periodic_return;
+    private CompareWithBf compare_with_brute_force;
     private List<Particle> particles;
 
     public Integer getM_grid_dimension() {
@@ -44,6 +45,14 @@ public class Config {
 
     public List<Particle> getParticles() {
         return particles;
+    }
+
+    public CompareWithBf getCompare_with_brute_force() {
+        return compare_with_brute_force;
+    }
+
+    public void setCompare_with_brute_force(CompareWithBf compare_with_brute_force) {
+        this.compare_with_brute_force = compare_with_brute_force;
     }
 
     public void setM_grid_dimension(Integer m_grid_dimension) {

@@ -1,10 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +26,10 @@ public class Simulation {
                 throw new IllegalArgumentException("L/M > rc + 2 * max_particle_radius (L/50.0)");
             }
 
+            if(config.getCompare_with_brute_force().getCompare()){
+                compareCimWithBruteForce(config);
+            }
+
             if (config.getRandom_generator()) {
                 config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side()));
             }
@@ -40,12 +41,13 @@ public class Simulation {
                 }
             }
 
-//            System.out.println(config.getN_number_of_particles());
-
             List<Particle>[][] matrix = Grid.build(config.getParticles(), config.getM_grid_dimension(), config.getL_grid_side());
             Map<Particle, List<Particle>> neighbours;
 
+
+
             long startTime = System.nanoTime();
+
             if(config.getBrute_force()) {
                 neighbours = BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
             } else {
@@ -54,7 +56,6 @@ public class Simulation {
 
             long endTime = System.nanoTime();
             long timeElapsed = endTime - startTime;
-            System.out.println("Search execution time in milliseconds: " + timeElapsed / 1000000.0);
 
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
@@ -76,5 +77,40 @@ public class Simulation {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void compareCimWithBruteForce(Config config) throws FileNotFoundException {
+
+        List<Particle>[][] matrix;
+
+        System.setOut(new PrintStream(new FileOutputStream("compare.json", true)));
+        System.out.println("[");
+
+        for( int n = 0; n < config.getCompare_with_brute_force().getMax_N(); n+=1) {
+
+            config.setParticles(ParticlesGenerator.generateRandom(n, config.getL_grid_side()));
+
+            for (int m =0; m< config.getCompare_with_brute_force().getMax_M(); m+=1) {
+                if(!(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50)))
+                    continue;
+
+                matrix = Grid.build(config.getParticles(), m, config.getL_grid_side());
+
+                // RUN BRUTE FORCE
+                long startTime = System.nanoTime();
+                BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
+                long endTime = System.nanoTime();
+                long timeElapsedBf = endTime - startTime;
+
+                // RUN CIM
+                startTime = System.nanoTime();
+                CellIndexMethod.search(matrix, config.getR_interaction_radius(), m, config.getL_grid_side(), config.getPeriodic_return());
+                endTime = System.nanoTime();
+                long timeElapsedCim = endTime - startTime;
+
+                System.out.printf("{\"N\":%d, \"M\":%d, \"time_bf\":%f, \"time_cim\":%f},\n", n, m, timeElapsedBf / 1000000.0, timeElapsedCim / 1000000.0);
+            }
+        }
+        System.out.println("]");
     }
 }

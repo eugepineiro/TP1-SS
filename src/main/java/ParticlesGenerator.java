@@ -11,7 +11,7 @@ public class ParticlesGenerator {
             x = ThreadLocalRandom.current().nextDouble(0, L); // upper bound excluded
             y = ThreadLocalRandom.current().nextDouble(0, L); // upper bound excluded
             radius = ThreadLocalRandom.current().nextDouble(0, maxRadius); // upper bound excluded
-            generated.add(new Particle(i, x, y, radius));
+            generated.add(new Particle(i, x, y, 0.25));
         }
 
         return generated;

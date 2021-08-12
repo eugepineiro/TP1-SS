@@ -3,3 +3,4 @@ target
 postprocessing/__pycache__
 *.json
 *.pyc
+compare.json
