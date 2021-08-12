@@ -195,3 +195,33 @@ def plot_comparison(data, grid_side):
     ax.set_zlabel("Time (seconds)")
 
     plt.show()
+    # Transparency
+    # surf3.actor.property.opacity = 0.5
+    # surf4.actor.property.opacity = 0.5
+    # fig.scene.renderer.use_depth_peeling = 1
+
+
+def plot_comparison_2D(data): 
+
+    proc_data = {'M': [], 'N': [], 'time_cim': [], 'time_bf': []}
+
+    for d in data:
+        # proc_data['M'].append(d['M'])
+        if d['M'] == 20:    
+            proc_data['N'].append(d['N'])
+            proc_data['time_cim'].append(d['time_cim'])
+            proc_data['time_bf'].append(d['time_bf'])
+
+
+    bf_scatter = plt.scatter(proc_data['N'], proc_data['time_bf'], label='Brute Force')
+    cim_scatter = plt.scatter(proc_data['N'], proc_data['time_cim'], label='Cell Index Method')
+
+    ax = plt.gca()
+    ax.set_yscale('log')
+    ax.set_xlabel('N particles')
+    ax.set_ylabel('time (s)')
+
+    plt.legend(handles=[bf_scatter,cim_scatter], loc='upper center')
+    
+    plt.grid()
+    plt.show()
