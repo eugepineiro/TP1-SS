@@ -3,6 +3,7 @@ public class CompareWithBf {
     private Integer max_M;
     private Integer max_N;
     private Boolean compare;
+    private Integer iterations_to_average;
 
     public Integer getMax_M() {
         return max_M;
@@ -26,5 +27,13 @@ public class CompareWithBf {
 
     public void setCompare(Boolean compare) {
         this.compare = compare;
+    }
+
+    public Integer getIterations_to_average() {
+        return iterations_to_average;
+    }
+
+    public void setIterations_to_average(Integer iterations_to_average) {
+        this.iterations_to_average = iterations_to_average;
     }
 }

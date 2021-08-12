@@ -6,9 +6,10 @@
   "random_generator": true,
   "brute_force": false,
   "compare_with_brute_force": {
-    "compare":  false,
-    "max_N": 10,
-    "max_M": 10
+    "compare":  true,
+    "max_N": 50,
+    "max_M": 50,
+    "iterations_to_average": 100
   },
   "periodic_return": true,
   "particles": [
