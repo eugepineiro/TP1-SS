@@ -51,7 +51,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
         axes.add_artist(draw_neighbour_radius)
         #axes.annotate(str(n['id']), xy=(n['x'], n['y']), fontsize=15, ha="center", color='cyan')
 
-    neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]],color="none", alpha=0.5, label='Neighbours') 
+    neighbours_scatter = plt.scatter(neighbours[0], neighbours[1], s=[e for e in neighbours[2]], alpha=0.5, label='Neighbours',color="green") 
     cursor=mplcursors.cursor(neighbours_scatter)
     cursor.connect("add", lambda sel: sel.annotation.set_text(neighbours[3][sel.target.index]))
   
@@ -76,7 +76,7 @@ def plot(particles_x, particles_y, particles_radius, particles_id, particle, int
     plt.xlim([0, grid_side])
     plt.ylim([0, grid_side])
 
-    plt.legend(handles=[particle_scatter,particles_scatter, neighbours_scatter], bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.legend(handles=[particle_scatter,particles_scatter, neighbours_scatter], bbox_to_anchor=(1.05, 1), loc='upper left', prop={'size': 10})
 
     plt.show()
 
@@ -84,7 +84,7 @@ def plot_chosen_particle(particle, interaction_radius, axes):
     # Draw particle 
     draw_particle_radius = plt.Circle((particle['x'], particle['y']), particle['radius'], color='k') # particle 
     axes.add_artist(draw_particle_radius)
-    particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0,label='Particle')
+    particle_scatter = plt.scatter(particle['x'], particle['y'], alpha=0.5,label='Particle', color="black")
     cursor_particles=mplcursors.cursor(particle_scatter)
     cursor_particles.connect("add", lambda sel: sel.annotation.set_text(particle['id']))
     #axes.annotate(str(particle['id']), xy=(particle['x'], particle['y']), fontsize=15, ha="center", color='cyan')
@@ -148,40 +148,6 @@ def plot_comparison(data, grid_side):
     Z_CIM = np.array(proc_data['time_cim'])
     Z_BF = np.array(proc_data['time_bf'])
 
-    # fig = plt.figure()
-
-    # ax = fig.add_subplot(111, projection='3d')
-    # ax.scatter(xs = proc_data['M'], ys = proc_data['N'], zs = proc_data['time_cim'])
-    # ax.set_title(f"M x N Timings with L={grid_side}")
-    # ax.set_xlabel("M (cells per row/column)")
-    # ax.set_ylabel("N (number of particles)")
-    # ax.set_zlabel("Time (seconds)")
-    # plt.show()
-
-    # MAYAVI
-
-    # fig = mlab.figure()
-
-    # ax_ranges = [-2, 2, -2, 2, 0, 8]
-    # ax_scale = [1.0, 1.0, 0.4]
-    # ax_extent = ax_ranges * np.repeat(ax_scale, 2)
-
-    # surf3 = mlab.surf(proc_data['M'], proc_data['N'], proc_data['time_cim'], colormap='Blues')
-    # surf4 = mlab.surf(proc_data['M'], proc_data['N'], proc_data['time_bf'], colormap='Oranges')
-
-    # surf3.actor.actor.scale = ax_scale
-    # surf4.actor.actor.scale = ax_scale
-    # mlab.view(60, 74, 17, [-2.5, -4.6, -0.3])
-    # mlab.outline(surf3, color=(.7, .7, .7), extent=ax_extent)
-    # mlab.axes(surf3, color=(.7, .7, .7), extent=ax_extent,
-    #           ranges=ax_ranges,
-    #           xlabel='x', ylabel='y', zlabel='z')
-
-    # # Transparency
-    # # surf3.actor.property.opacity = 0.5
-    # # surf4.actor.property.opacity = 0.5
-    # # fig.scene.renderer.use_depth_peeling = 1
-
     fig = plt.figure()
 
     ax = fig.gca(projection='3d')
@@ -195,33 +161,52 @@ def plot_comparison(data, grid_side):
     ax.set_zlabel("Time (seconds)")
 
     plt.show()
-    # Transparency
-    # surf3.actor.property.opacity = 0.5
-    # surf4.actor.property.opacity = 0.5
-    # fig.scene.renderer.use_depth_peeling = 1
-
 
 def plot_comparison_2D(data): 
 
+    fig, (ax1, ax2) = plt.subplots(1,2)
+
     proc_data = {'M': [], 'N': [], 'time_cim': [], 'time_bf': []}
+    proc_data2 = {'M': [], 'N': [], 'time_cim': [], 'time_bf': []}
 
     for d in data:
-        # proc_data['M'].append(d['M'])
-        if d['M'] == 20:    
+       
+        if d['M'] == 10:    
             proc_data['N'].append(d['N'])
             proc_data['time_cim'].append(d['time_cim'])
             proc_data['time_bf'].append(d['time_bf'])
+    
+    print(proc_data)
 
+    bf_scatter = ax1.scatter(proc_data['N'], proc_data['time_bf'], label='Brute Force')
+    cim_scatter = ax1.scatter(proc_data['N'], proc_data['time_cim'], label='Cell Index Method')
 
-    bf_scatter = plt.scatter(proc_data['N'], proc_data['time_bf'], label='Brute Force')
-    cim_scatter = plt.scatter(proc_data['N'], proc_data['time_cim'], label='Cell Index Method')
+    #ax1 = plt.gca()
+    ax1.set_yscale('log')
+    ax1.set_xlabel('N particles')
+    ax1.set_ylabel('time (s)')
+    ax1.set_title('Time vs N for M=10')
 
-    ax = plt.gca()
-    ax.set_yscale('log')
-    ax.set_xlabel('N particles')
-    ax.set_ylabel('time (s)')
+    for d in data:
+        
+        if d['N'] == 50:    
+            proc_data2['M'].append(d['M'])
+            proc_data2['time_cim'].append(d['time_cim'])
+            proc_data2['time_bf'].append(d['time_bf'])
+    
+    print(proc_data)
 
-    plt.legend(handles=[bf_scatter,cim_scatter], loc='upper center')
+    bf_scatter2 = ax2.scatter(proc_data2['M'], proc_data2['time_bf'], label='Brute Force')
+    cim_scatter2 = ax2.scatter(proc_data2['M'], proc_data2['time_cim'], label='Cell Index Method')
+
+    #ax2 = plt.gca()
+    ax2.set_yscale('log')
+    ax2.set_xlabel('M')
+    ax2.set_ylabel('time (s)') 
+    ax2.set_title('Time vs M for N=50')
+
+    ax1.legend(handles=[bf_scatter,cim_scatter], loc='upper center') 
+    ax2.legend(handles=[bf_scatter2,cim_scatter2], loc='upper center')
     
     plt.grid()
     plt.show()

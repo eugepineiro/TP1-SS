@@ -57,7 +57,7 @@ public class Simulation {
             long endTime = System.nanoTime();
             long timeElapsed = endTime - startTime;
 
-            System.out.println("Time in ms: " + timeElapsed / 1000000.0 );
+            //System.out.println("Time in ms: " + timeElapsed / 1000000.0 );
 
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
@@ -92,12 +92,14 @@ public class Simulation {
         final int iterationsToAverage = config.getCompare_with_brute_force().getIterations_to_average();
         long elapsedAverageCim, elapsedAverageBf;
 
-        for( int n = 0; n < config.getCompare_with_brute_force().getMax_N(); n+=1) {
+        for( int n = 1; n < config.getCompare_with_brute_force().getMax_N(); n+=1) {
 
             config.setParticles(ParticlesGenerator.generateRandom(n, config.getL_grid_side()));
 
-            for (int m =0; m< config.getCompare_with_brute_force().getMax_M(); m+=1) {
-                if(!(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50)))
+            for (int m =1; m< config.getCompare_with_brute_force().getMax_M(); m+=1) {
+                /*if(!(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50)))
+                    continue; */
+                if(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 0.5))
                     continue;
 
                 elapsedAverageCim = 0;
