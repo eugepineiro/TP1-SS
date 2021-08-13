@@ -57,6 +57,8 @@ public class Simulation {
             long endTime = System.nanoTime();
             long timeElapsed = endTime - startTime;
 
+            System.out.println("Time in ms: " + timeElapsed / 1000000.0 );
+
             List<Map<String, Object>> to_ret = neighbours.entrySet().stream().map(entry -> {
                 Map<String, Object> obj = new HashMap<>();
                 obj.put("id", entry.getKey().getId());
