@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
+# from mayavi import mlab
 import mplcursors
 
 SCALE = 1
@@ -131,3 +133,95 @@ def plot_periodic_conditions(particle, rc, grid_side, axes):
         if (y + r + rc >= grid_side):                               # filas arriba
             build_and_plot(x, y - grid_side)
             
+def plot_comparison(data, grid_side):
+    
+    proc_data = {'M': [], 'N': [], 'time_cim': [], 'time_bf': []}
+
+    for d in data:
+        proc_data['M'].append(d['M'])
+        proc_data['N'].append(d['N'])
+        proc_data['time_cim'].append(d['time_cim'])
+        proc_data['time_bf'].append(d['time_bf'])
+
+    X = np.array(proc_data['M'])
+    Y = np.array(proc_data['N'])
+    Z_CIM = np.array(proc_data['time_cim'])
+    Z_BF = np.array(proc_data['time_bf'])
+
+    # fig = plt.figure()
+
+    # ax = fig.add_subplot(111, projection='3d')
+    # ax.scatter(xs = proc_data['M'], ys = proc_data['N'], zs = proc_data['time_cim'])
+    # ax.set_title(f"M x N Timings with L={grid_side}")
+    # ax.set_xlabel("M (cells per row/column)")
+    # ax.set_ylabel("N (number of particles)")
+    # ax.set_zlabel("Time (seconds)")
+    # plt.show()
+
+    # MAYAVI
+
+    # fig = mlab.figure()
+
+    # ax_ranges = [-2, 2, -2, 2, 0, 8]
+    # ax_scale = [1.0, 1.0, 0.4]
+    # ax_extent = ax_ranges * np.repeat(ax_scale, 2)
+
+    # surf3 = mlab.surf(proc_data['M'], proc_data['N'], proc_data['time_cim'], colormap='Blues')
+    # surf4 = mlab.surf(proc_data['M'], proc_data['N'], proc_data['time_bf'], colormap='Oranges')
+
+    # surf3.actor.actor.scale = ax_scale
+    # surf4.actor.actor.scale = ax_scale
+    # mlab.view(60, 74, 17, [-2.5, -4.6, -0.3])
+    # mlab.outline(surf3, color=(.7, .7, .7), extent=ax_extent)
+    # mlab.axes(surf3, color=(.7, .7, .7), extent=ax_extent,
+    #           ranges=ax_ranges,
+    #           xlabel='x', ylabel='y', zlabel='z')
+
+    # # Transparency
+    # # surf3.actor.property.opacity = 0.5
+    # # surf4.actor.property.opacity = 0.5
+    # # fig.scene.renderer.use_depth_peeling = 1
+
+    fig = plt.figure()
+
+    ax = fig.gca(projection='3d')
+
+    ax.plot_trisurf(X, Y, Z_CIM, linewidth=1, cmap=cm.summer, alpha = 0.5)
+    ax.plot_trisurf(X, Y, Z_BF, linewidth=1, cmap=cm.autumn, alpha = 1)
+
+    ax.set_title(f"M x N Timings with L={grid_side}")
+    ax.set_xlabel("M (cells per row/column)")
+    ax.set_ylabel("N (number of particles)")
+    ax.set_zlabel("Time (seconds)")
+
+    plt.show()
+    # Transparency
+    # surf3.actor.property.opacity = 0.5
+    # surf4.actor.property.opacity = 0.5
+    # fig.scene.renderer.use_depth_peeling = 1
+
+
+def plot_comparison_2D(data): 
+
+    proc_data = {'M': [], 'N': [], 'time_cim': [], 'time_bf': []}
+
+    for d in data:
+        # proc_data['M'].append(d['M'])
+        if d['M'] == 20:    
+            proc_data['N'].append(d['N'])
+            proc_data['time_cim'].append(d['time_cim'])
+            proc_data['time_bf'].append(d['time_bf'])
+
+
+    bf_scatter = plt.scatter(proc_data['N'], proc_data['time_bf'], label='Brute Force')
+    cim_scatter = plt.scatter(proc_data['N'], proc_data['time_cim'], label='Cell Index Method')
+
+    ax = plt.gca()
+    ax.set_yscale('log')
+    ax.set_xlabel('N particles')
+    ax.set_ylabel('time (s)')
+
+    plt.legend(handles=[bf_scatter,cim_scatter], loc='upper center')
+    
+    plt.grid()
+    plt.show()

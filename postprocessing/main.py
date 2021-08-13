@@ -1,5 +1,5 @@
 import json, random, sys
-from plotter import plot
+from plotter import plot, plot_comparison, plot_comparison_2D
 
 with open("../src/main/resources/config/config.json") as f:
     config = json.load(f) 
@@ -12,6 +12,11 @@ number_of_particles = len(all_particles)
 M_grid_size = config["m_grid_dimension"]
 L_grid_side = config["l_grid_side"]
 periodic_condition = config["periodic_return"]
+compare_with_brute_force = config["compare_with_brute_force"]
+
+if compare_with_brute_force["compare"]:
+    with open("../src/main/resources/compare.json") as f:
+        comparison_data = json.load(f)
 
 if(len(sys.argv) == 2):
     try:
@@ -53,4 +58,8 @@ for i in range(len(all_particles[idx]['neighbours'])):
     neighbours_y.append(all_particles[idx]['neighbours'][i]['y'])
     neighbours_radius.append(all_particles[idx]['neighbours'][i]['radius'])    
 
-plot(all_particles_x,all_particles_y, all_particles_radius, all_particles_id, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius, neighbours_id], M_grid_size, L_grid_side, periodic_condition)
+if (compare_with_brute_force['compare']):
+    plot_comparison(comparison_data, L_grid_side)
+    plot_comparison_2D(comparison_data)
+else:
+    plot(all_particles_x,all_particles_y, all_particles_radius, all_particles_id, particle, interaction_radius, [neighbours_x, neighbours_y, neighbours_radius, neighbours_id], M_grid_size, L_grid_side, periodic_condition)

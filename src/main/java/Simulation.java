@@ -85,8 +85,12 @@ public class Simulation {
 
         List<Particle>[][] matrix;
 
-        System.setOut(new PrintStream(new FileOutputStream("compare.json", true)));
+        System.setOut(new PrintStream(new FileOutputStream("src/main/resources/compare.json", true)));
         System.out.println("[");
+
+        boolean started = false;
+        final int iterationsToAverage = config.getCompare_with_brute_force().getIterations_to_average();
+        long elapsedAverageCim, elapsedAverageBf;
 
         for( int n = 0; n < config.getCompare_with_brute_force().getMax_N(); n+=1) {
 
@@ -96,21 +100,33 @@ public class Simulation {
                 if(!(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50)))
                     continue;
 
-                matrix = Grid.build(config.getParticles(), m, config.getL_grid_side());
+                elapsedAverageCim = 0;
+                elapsedAverageBf = 0;
 
-                // RUN BRUTE FORCE
-                long startTime = System.nanoTime();
-                BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
-                long endTime = System.nanoTime();
-                long timeElapsedBf = endTime - startTime;
+                for (int l=0; l< iterationsToAverage; l++) {
+                    matrix = Grid.build(config.getParticles(), m, config.getL_grid_side());
 
-                // RUN CIM
-                startTime = System.nanoTime();
-                CellIndexMethod.search(matrix, config.getR_interaction_radius(), m, config.getL_grid_side(), config.getPeriodic_return());
-                endTime = System.nanoTime();
-                long timeElapsedCim = endTime - startTime;
+                    // RUN BRUTE FORCE
+                    long startTime = System.nanoTime();
+                    BruteForceMethod.search(config.getParticles(), config.getR_interaction_radius(), config.getL_grid_side(), config.getPeriodic_return());
+                    long endTime = System.nanoTime();
+                    elapsedAverageBf += endTime - startTime;
 
-                System.out.printf("{\"N\":%d, \"M\":%d, \"time_bf\":%f, \"time_cim\":%f},\n", n, m, timeElapsedBf / 1000000.0, timeElapsedCim / 1000000.0);
+                    // RUN CIM
+                    startTime = System.nanoTime();
+                    CellIndexMethod.search(matrix, config.getR_interaction_radius(), m, config.getL_grid_side(), config.getPeriodic_return());
+                    endTime = System.nanoTime();
+                    elapsedAverageCim += endTime - startTime;
+                }
+
+                elapsedAverageCim /= iterationsToAverage;
+                elapsedAverageBf /= iterationsToAverage;
+
+                if (started) {
+                    System.out.print(",\n");
+                }
+                if (!started) started = true;
+                System.out.printf("{\"N\":%d, \"M\":%d, \"time_bf\":%f, \"time_cim\":%f}", n, m, elapsedAverageBf / 1000000.0, elapsedAverageCim / 1000000.0);
             }
         }
         System.out.println("]");
