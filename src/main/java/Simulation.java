@@ -2,16 +2,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Simulation {
     // carga config, llama al CIM, devuelve list_vecinos
     
     public static void main(String[] args) {
+
         ObjectMapper mapper = new ObjectMapper();
         // carga config
         try {
@@ -26,12 +24,20 @@ public class Simulation {
                 throw new IllegalArgumentException("L/M > rc + 2 * max_particle_radius (L/50.0)");
             }
 
+            // Configure random
+            Random r;
+            Long seed = config.getSeed();
+            if (seed == null)
+                r = new Random();
+            else
+                r = new Random(seed);
+
             if(config.getCompare_with_brute_force().getCompare()){
-                compareCimWithBruteForce(config);
+                compareCimWithBruteForce(config, r);
             }
 
             if (config.getRandom_generator()) {
-                config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side()));
+                config.setParticles(ParticlesGenerator.generateRandom(config.getN_number_of_particles(), config.getL_grid_side(), null, r));
             }
             else {
                 config.setN_number_of_particles(config.getParticles().size());
@@ -81,7 +87,7 @@ public class Simulation {
         }
     }
 
-    private static void compareCimWithBruteForce(Config config) throws FileNotFoundException {
+    private static void compareCimWithBruteForce(Config config, Random r) throws FileNotFoundException {
 
         List<Particle>[][] matrix;
 
@@ -94,7 +100,7 @@ public class Simulation {
 
         for( int n = 1; n < config.getCompare_with_brute_force().getMax_N(); n+=1) {
 
-            config.setParticles(ParticlesGenerator.generateRandom(n, config.getL_grid_side()));
+            config.setParticles(ParticlesGenerator.generateRandom(n, config.getL_grid_side(), null, r));
 
             for (int m =1; m< config.getCompare_with_brute_force().getMax_M(); m+=1) {
                 /*if(!(1.0 * config.getL_grid_side() / m <= (config.getR_interaction_radius() + 2.0 * config.getL_grid_side() / 50)))

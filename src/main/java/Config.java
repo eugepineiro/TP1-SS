@@ -14,6 +14,7 @@ public class Config {
     private Boolean periodic_return;
     private CompareWithBf compare_with_brute_force;
     private List<Particle> particles;
+    private Long seed;
 
     public Integer getM_grid_dimension() {
         return m_grid_dimension;
@@ -87,6 +88,14 @@ public class Config {
         this.particles = particles;
     }
 
+    public Long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(Long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public String toString() {
         return "Config{" +
@@ -95,7 +104,11 @@ public class Config {
                 ", r_interaction_radius=" + r_interaction_radius +
                 ", l_grid_side=" + l_grid_side +
                 ", random_generator=" + random_generator +
+                ", brute_force=" + brute_force +
+                ", periodic_return=" + periodic_return +
+                ", compare_with_brute_force=" + compare_with_brute_force +
                 ", particles=" + particles +
+                ", seed=" + seed +
                 '}';
     }
 }

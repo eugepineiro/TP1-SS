@@ -3,11 +3,10 @@ import java.util.List;
 
 public class Grid {
 
-    public static List<Particle>[][] build(List<Particle> particles, int M, int L){
+    public static <T extends Particle> List<T>[][] build(List<T> particles, int M, int L){
         double cellSize = 1.0 * L/M;
 
-        //List<List<List<Particle>>> matrix = new ArrayList<>(M);
-        List<Particle>[][] matrix = new ArrayList[M][M];
+        List<T>[][] matrix = new ArrayList[M][M];
 //            int [][] =  [5][5]
 
         for (int i = 0; i < M; i++) {

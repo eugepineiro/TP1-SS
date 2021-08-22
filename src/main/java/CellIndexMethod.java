@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class CellIndexMethod extends SearchMethod {
 
-     public static Map<Particle, List<Particle>> search(List<Particle>[][] matrix, double interactionRadius, int M, int L, boolean periodicReturnCond) {
+     public static <T extends Particle> Map<T, List<T>> search(List<T>[][] matrix, double interactionRadius, int M, int L, boolean periodicReturnCond) {
 
-          Map<Particle, List<Particle>> particleMap = new HashMap<>();
+          Map<T, List<T>> particleMap = new HashMap<>();
 
-          Particle aux;
+          T aux;
 
           // Recorrido de grilla
           for(int i = 0 ; i < M ; i++) {
@@ -30,7 +30,7 @@ public class CellIndexMethod extends SearchMethod {
 
                          int k = periodicReturnCond? (j+1) % M : (j+1);
                          if(k < M) {
-                              for(Particle p: matrix[i][k]) {
+                              for(T p: matrix[i][k]) {
                                    addNeighbours(particleMap, matrix[i][j].get(t), p, interactionRadius, L, periodicReturnCond);
                               }
                          }
@@ -41,7 +41,7 @@ public class CellIndexMethod extends SearchMethod {
                          if(h < M) {
                               for (int r=0; r < 3; r++) {
                                    if(k >= 0 && k < M) {
-                                        for(Particle p: matrix[h][k]) {
+                                        for(T p: matrix[h][k]) {
                                              addNeighbours(particleMap, matrix[i][j].get(t), p, interactionRadius, L, periodicReturnCond);
                                         }
                                    }
