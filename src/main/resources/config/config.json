@@ -6,7 +6,7 @@
   "random_generator": true,
   "brute_force": false,
   "compare_with_brute_force": {
-    "compare": true,
+    "compare": false,
     "max_N": 100,
     "max_M": 20,
     "iterations_to_average": 100
